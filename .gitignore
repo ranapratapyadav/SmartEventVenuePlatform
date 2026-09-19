@@ -1,0 +1,24 @@
+# Eclipse
+.metadata/
+.classpath
+.project
+.settings/
+
+# Maven
+target/
+*.class
+
+# Spring Boot
+*.log
+
+# IDE
+.idea/
+*.iml
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Environment / secrets
+.env
+*.env
