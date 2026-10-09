@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.smartevent.notification.entity.Notification;
 import com.smartevent.notification.entity.NotificationStatus;
+import com.smartevent.notification.exception.NotificationNotFoundException;
 import com.smartevent.notification.repository.NotificationRepository;
 
 @Service
@@ -51,7 +52,7 @@ public class NotificationService {
     public Notification getNotificationById(Long notificationId) {
 
         return notificationRepository.findById(notificationId)
-                .orElseThrow(() -> new RuntimeException(
+                .orElseThrow(() -> new NotificationNotFoundException(
                         "Notification not found with ID: " + notificationId));
     }
 
@@ -70,6 +71,17 @@ public class NotificationService {
         }
 
         Notification notification = getNotificationById(notificationId);
+
+        NotificationStatus currentStatus =
+                notification.getNotificationStatus();
+
+        if (currentStatus == NotificationStatus.SENT
+                || currentStatus == NotificationStatus.FAILED) {
+
+            throw new IllegalStateException(
+                    "Cannot change notification status from "
+                            + currentStatus);
+        }
 
         notification.setNotificationStatus(status);
 
