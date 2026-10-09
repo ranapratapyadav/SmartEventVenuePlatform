@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "notifications")
@@ -21,6 +23,9 @@ public class Notification {
 
     private Long bookingId;
 
+    @NotBlank(message = "Message is required")
+    @Size(max = 255, message = "Message must not exceed 255 characters")
+    @Column(length = 255)
     private String message;
 
     private NotificationType notificationType;

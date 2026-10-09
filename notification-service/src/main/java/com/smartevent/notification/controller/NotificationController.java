@@ -11,6 +11,8 @@ import com.smartevent.notification.entity.NotificationStatus;
 import com.smartevent.notification.entity.NotificationType;
 import com.smartevent.notification.service.NotificationService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/notifications")
 public class NotificationController {
@@ -29,7 +31,7 @@ public class NotificationController {
 
     @PostMapping
     public ResponseEntity<Notification> createNotification(
-            @RequestBody Notification notification) {
+            @Valid @RequestBody Notification notification) {
 
         Notification savedNotification =
                 notificationService.createNotification(notification);
